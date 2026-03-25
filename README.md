@@ -46,38 +46,6 @@ O dashboard é organizado em **5 abas temáticas**:
 - 🏆 **Tabela de alavancas** com priorização por impacto estimado
 
 ---
-
-## 🚀 Como Usar
-
-**Opção 1 — Direto no Browser**
-
-    git clone https://github.com/seu-usuario/coffee-shop-dashboard.git
-    open index.html
-
-**Opção 2 — Servidor Local (Python)**
-
-    python -m http.server 8080
-
-**Opção 2 — Servidor Local (Node.js)**
-
-    npx serve .
-
-Acesse `http://localhost:8080` no browser.
-
----
-
-## 📁 Estrutura do Projeto
-
-    coffee-shop-dashboard/
-    │
-    ├── index.html        # Dashboard completo (single-file)
-    ├── README.md         # Este arquivo
-    └── preview.png       # Screenshot do dashboard (opcional)
-
-> Todo o CSS e JavaScript estão embutidos no `index.html` para facilitar o compartilhamento e deploy sem configuração adicional.
-
----
-
 ## 📌 Principais Insights
 
 - 📈 **+103,8% de crescimento** de receita entre Janeiro e Junho
@@ -99,13 +67,7 @@ Acesse `http://localhost:8080` no browser.
 
 ---
 
-## 📄 Licença
-
-Distribuído sob a licença **MIT**. Veja `LICENSE` para mais informações.
-
----
-
 ## 🙋 Autor
 
-Feito com ☕ por **[Vitor Campos](https://github.com/seu-usuario)**  
-📍 Contagem, Minas Gerais, Brasil
+Feito com ☕ por **[Vitor Campos](www.linkedin.com/in/vitor-campos-tech)**  
+📍 Vitor Campos Moura Costa - Analista de Dados
