@@ -69,5 +69,5 @@ O dashboard é organizado em **5 abas temáticas**:
 
 ## 🙋 Autor
 
-Feito com ☕ por **[Vitor Campos](www.linkedin.com/in/vitor-campos-tech)**  
+Feito por **[Vitor Campos](www.linkedin.com/in/vitor-campos-tech)**  
 📍 Vitor Campos Moura Costa - Analista de Dados
