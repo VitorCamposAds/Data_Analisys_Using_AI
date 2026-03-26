@@ -270,6 +270,28 @@
     <div class="kpi-card" style="--kpi-color:#f7c948"><div class="kpi-label">2º Produto</div><div class="kpi-value">Chai Tea</div><div class="kpi-delta">$77k</div></div>
     <div class="kpi-card" style="--kpi-color:#ff6b6b"><div class="kpi-label">Categorias</div><div class="kpi-value">9</div><div class="kpi-delta">Tipos distintos</div></div>
   </div>
+  <div class="chart-grid col2">
+    <div class="chart-card wide">
+      <h3>📊 Receita por Categoria de Produto</h3>
+      <p>Coffee domina com 38,6% da receita, seguido por Tea (28,1%) e Bakery (11,8%)</p>
+      <div class="chart-wrap"><canvas id="chartProdCatBar"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>🥇 Top 10 Produtos por Receita</h3>
+      <p>Espresso e Chai Tea lideram — juntos somam mais de $168k</p>
+      <div class="chart-wrap tall"><canvas id="chartProdTop10"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>🍩 Participação de Categorias (% Receita)</h3>
+      <p>Distribuição proporcional da receita entre as 9 categorias</p>
+      <div class="chart-wrap tall"><canvas id="chartProdDoughnut"></canvas></div>
+    </div>
+    <div class="chart-card wide">
+      <h3>📈 Evolução Mensal das Top 4 Categorias</h3>
+      <p>Coffee e Tea crescem consistentemente — Bakery e Chocolate acompanham o ritmo</p>
+      <div class="chart-wrap"><canvas id="chartProdCatLine"></canvas></div>
+    </div>
+  </div>
   <div class="insight-grid">
     <div class="insight-card" style="--insight-color:#6c63ff"><h4>☕ Domínio do Espresso</h4><p>Barista Espresso ($91,4k) e Gourmet Brewed Coffee ($70k) juntos representam mais de 59% da receita da categoria Coffee, tornando-os produtos críticos para proteção de estoque e qualidade.</p></div>
     <div class="insight-card" style="--insight-color:#00c9a7"><h4>🍵 Portfólio de Chá diversificado</h4><p>Chai Tea ($77k), Black Tea ($47,9k), Herbal Tea ($47,5k) e Green Tea compõem um portfólio robusto. A categoria Tea soma $196k — 28% da receita total.</p></div>
@@ -384,7 +406,7 @@ function mkChart(id, config) {
   return c;
 }
 
-// ABA 1
+// ABA 1 — VISÃO GERAL
 mkChart('chartRevTotal', {
   type: 'line',
   data: { labels: MONTHS, datasets: [{ label: 'Receita (USD)', data: [81677.74,76145.19,98834.68,118941.08,156727.76,166485.88], borderColor: '#6c63ff', backgroundColor: 'rgba(108,99,255,0.12)', borderWidth: 3, pointRadius: 6, pointBackgroundColor: '#6c63ff', fill: true, tension: 0.4 }] },
@@ -432,7 +454,7 @@ mkChart('chartCatBar', {
   options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{title:{display:true,text:'Categoria'}}, y:{title:{display:true,text:'Receita (USD)'},ticks:{callback:v=>fmtK(v)}} } }
 });
 
-// ABA 2
+// ABA 2 — LOJAS
 mkChart('chartStoreMonthly', {
   type: 'line',
   data: { labels: MONTHS, datasets: [
@@ -455,7 +477,47 @@ mkChart('chartStoreTicket', {
   options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{title:{display:true,text:'Loja'}}, y:{title:{display:true,text:'Ticket Médio ($)'},min:4.4,ticks:{callback:v=>'$'+v.toFixed(2)}} } }
 });
 
-// ABA 4
+// ABA 3 — PRODUTOS
+mkChart('chartProdCatBar', {
+  type: 'bar',
+  data: { labels: ['Coffee','Tea','Bakery','Drk. Chocolate','Coffee Beans','Branded','Loose Tea','Flavours','Pkg. Chocolate'], datasets: [{ label:'Receita (USD)', data:[269952.45,196405.95,82315.64,72416.00,40085.25,13607.00,11213.60,8408.80,4407.64], backgroundColor:COLORS, borderRadius:6 }] },
+  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{title:{display:true,text:'Categoria'}}, y:{title:{display:true,text:'Receita (USD)'},ticks:{callback:v=>fmtK(v)}} } }
+});
+
+mkChart('chartProdTop10', {
+  type: 'bar',
+  data: { labels: ['Drip coffee','Scone','Organic brew','Premium brew','Herbal tea','Black tea','Gourmet brew','Hot chocolate','Chai tea','Espresso'], datasets: [{ label:'Receita', data:[31984,36866.12,37746.5,38781.15,47539.5,47932,70034.6,72416,77081.95,91406.2], backgroundColor:COLORS[1], borderRadius:4 }] },
+  options: { indexAxis:'y', responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{title:{display:true,text:'Receita (USD)'},ticks:{callback:v=>fmtK(v)}}, y:{} } }
+});
+
+mkChart('chartProdDoughnut', {
+  type: 'doughnut',
+  data: {
+    labels: ['Coffee','Tea','Bakery','Drk. Chocolate','Coffee Beans','Branded','Loose Tea','Flavours','Pkg. Chocolate'],
+    datasets: [{ data:[269952.45,196405.95,82315.64,72416.00,40085.25,13607.00,11213.60,8408.80,4407.64], backgroundColor:COLORS, borderColor:'#1a1d27', borderWidth:2 }]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{ position:'bottom', labels:{ boxWidth:12, font:{ size:11 } } },
+      tooltip:{ callbacks:{ label: ctx => ' ' + ctx.label + ': $' + (ctx.parsed/1000).toFixed(1) + 'k (' + ((ctx.parsed/698812.33)*100).toFixed(1) + '%)' } }
+    },
+    cutout: '60%'
+  }
+});
+
+mkChart('chartProdCatLine', {
+  type: 'line',
+  data: { labels: MONTHS, datasets: [
+    { label:'Coffee',  data:[31261.4,29269.7,38290.5,45970.5,60317.8,64842.5], borderColor:COLORS[0], backgroundColor:'rgba(108,99,255,0.08)', borderWidth:2.5, pointRadius:4, fill:true, tension:0.4 },
+    { label:'Tea',     data:[22625.2,21742.0,27921.2,33292.2,44558.1,46267.2], borderColor:COLORS[1], backgroundColor:'rgba(0,201,167,0.08)', borderWidth:2.5, pointRadius:4, fill:true, tension:0.4 },
+    { label:'Bakery',  data:[9531.7, 9044.5,11906.0,14023.0,18573.3,19237.1], borderColor:COLORS[2], backgroundColor:'transparent', borderWidth:2, pointRadius:4, tension:0.4 },
+    { label:'Drk. Choc.', data:[8339.3,8136.4,10255.8,12252.8,16320.3,17111.4], borderColor:COLORS[3], backgroundColor:'transparent', borderWidth:2, pointRadius:4, tension:0.4 }
+  ]},
+  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom'}}, scales:{ x:{title:{display:true,text:'Mês'}}, y:{title:{display:true,text:'Receita (USD)'},ticks:{callback:v=>fmtK(v)}} } }
+});
+
+// ABA 4 — COMPORTAMENTO
 const hourColors = [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20].map(h=>(h>=7&&h<=10)?'#6c63ff':(h>=20?'#ff6b6b':'#8b92b8'));
 mkChart('chartHour', {
   type: 'bar',
@@ -469,7 +531,7 @@ mkChart('chartDOW', {
   options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{title:{display:true,text:'Dia da Semana'}}, y:{title:{display:true,text:'Receita (USD)'},min:90000,ticks:{callback:v=>fmtK(v)}} } }
 });
 
-// ABA 5
+// ABA 5 — ALAVANCAS
 mkChart('chartAlavancaCat', {
   type: 'bar',
   data: { labels: ['Coffee','Tea','Bakery','Drk. Choc.','Coffee Beans','Outros'], datasets: [
